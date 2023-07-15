@@ -4,6 +4,7 @@ const {Server_config}=require('./config')
 const mountRoutes = require("./routes");
 const rateLimit = require('express-rate-limit');
 const {createProxyMiddleware }=require('http-proxy-middleware')
+const{User, Role}=require('./models')
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(limiter);
+app.use("/api", mountRoutes);
 
 app.use('/flightService', createProxyMiddleware({target:Server_config.FLIGHT_SERVICE , changeOrigin:true}))
 
@@ -34,12 +36,17 @@ app.use('/bookingService' , createProxyMiddleware({target:Server_config.BOOKING_
 
 
 
-app.use("/api", mountRoutes);
 
 
 
-app.listen(5000, function exec() {
+
+app.listen(5000, async function exec() {
   console.log(`Starting My server at Port ${5000}`);
+
+    user=await User.findByPk(6);
+    role=await Role.findByPk(1);
+    console.log( user , role)
+    user.addRole(role)
 
 });
 

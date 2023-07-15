@@ -1,11 +1,13 @@
-const { UserRepository } = require("../repository");
+const { UserRepository, RoleRepository } = require("../repository");
 const AppError = require("../utils/errors/AppError");
 const { StatusCodes } = require("http-Status-Codes");
 const userRepository = new UserRepository();
 const bcrypt = require("bcrypt");
-const { Auth } = require("../utils/common");
+const { Auth,Enum } = require("../utils/common");
 const ServerConfig = require("../config/Server-config");
 const jwt = require("jsonwebtoken");
+const roleRepository=new RoleRepository()
+
 
 async function createUser(data) {
   try {
@@ -13,6 +15,10 @@ async function createUser(data) {
 
     const user = await userRepository.create(data);
     //   console.log(airplane)
+
+   const role= await roleRepository.getRoleByName(Enum.USER_ROLES_ENUM.CUSTOMER)
+
+   user.addRole(role);
 
     return user;
   } catch (error) {
