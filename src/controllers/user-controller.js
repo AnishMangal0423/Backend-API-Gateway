@@ -67,8 +67,41 @@ async function signin(req, res) {
     }
   }
   
+
+
+  async function addRoleToUser(req, res) {
+    try {
+      console.log("inside controller signin");
+  
+      const user = await user_Service.addRoletoUser({
+        role: req.body.role,
+        userId: req.body.userId,
+      });
+  
+      Correct_Res.data = user;
+  
+      return res.json({
+        Correct_Res,
+      });
+    } catch (error) {
+      console.log("hiiii  " + error);
+  
+      Error_Res.message = " Something went wrong .. ";
+      // Error_Res.message=
+  
+      Error_Res.Error.description = error.message;
+  
+      return res.status(error.statuscode).json({
+        Error_Res,
+      });
+    }
+  }
+  
+
+
 module.exports={
 
     MakeUser,
     signin,
-}
+    addRoleToUser
+  }

@@ -8,7 +8,8 @@ const router=express.Router();
 
 
 router.post('/signup' ,  makeUser.MakeUser);
-router.post('/signin' ,makeUser.signin)
+router.post('/signin' ,makeUser.signin);
+router.post('/role', makeUser.addRoleToUser)
 
 
 
