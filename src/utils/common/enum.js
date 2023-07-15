@@ -1,13 +1,11 @@
-const seatType={
+const USER_ROLES_ENUM={
 
-      BUSSINESS:"business",
-      ECONOMY:"economy",
-      PREMIUM_ECONOMY:"premium_economy",
-      FIRST_CLASS:"first_class",
-
+     ADMIN:'admin',
+     CUSTOMER:'customer',
+     FLIGHT_COMPANY:'flight_company'
 }
 
 module.exports={
 
-    seatType
+       USER_ROLES_ENUM
 }
